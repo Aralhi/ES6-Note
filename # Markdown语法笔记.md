@@ -27,6 +27,8 @@
 
 用`把代码包起来
 
+`let a = 111;`
+
 # 换行
 
 两个回车
@@ -38,6 +40,7 @@
 # 链接
 
 [链接文字](链接地址)
+
 [Markdown语法笔记](https://github.com/StefanieLover/ES6-Note/blob/master/%23%20Markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0.md)
 
 # 分割线
@@ -46,9 +49,15 @@
 
 `***`
 
+***
+
 `---`
 
+---
+
 `___`
+
+___
 
 # 列表标记
 
@@ -59,3 +68,5 @@
 1. item1
 2. item2
 3. item3
+
+或者用*,-
