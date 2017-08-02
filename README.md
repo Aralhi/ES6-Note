@@ -241,6 +241,169 @@ typeof运算符对于 Integer 类型的数据返回integer。
 	// 报错 TypeError
 	```
 	- Interger 类型不能与 Number 类型进行混合运算。
+## 函数的扩展
+
+	1. ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。
+
+	2. 默认值可以与解构复制的默认值结合起来使用
+	```
+	function foo({x, y = 5}) {
+	  console.log(x, y);
+	}
+
+	foo({}) // undefined, 5
+	foo({x: 1}) // 1, 5
+	foo({x: 1, y: 2}) // 1, 2
+	foo() // TypeError: Cannot read property 'x' of undefined
+	```
+
+	3. 函数的 length 属性
+
+	指定了默认值以后，函数的length属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length属性将失真。
+
+	这是因为length属性的含义是，该函数预期传入的参数个数。某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。同理，rest 参数也不会计入length属性。
+
+## 对象的扩展
+	
+	1. ES6 允许在对象之中，直接写变量。这时，属性名为变量名, 属性值为变量的值
+
+	```
+	function f(x, y) {
+	  return {x, y};
+	}
+
+	// 等同于
+
+	function f(x, y) {
+	  return {x: x, y: y};
+	}
+
+	f(1, 2) // Object {x: 1, y: 2}
+	```
+
+	除了属性简写，方法也可以简写。
+
+	```
+	var o = {
+	  method() {
+	    return "Hello!";
+	  }
+	};
+
+	// 等同于
+
+	var o = {
+	  method: function() {
+	    return "Hello!";
+	  }
+	};
+	```
+
+	这种写法用于函数的返回值，将会非常方便。
+
+	```
+	function getPoint() {
+	  var x = 1;
+	  var y = 10;
+	  return {x, y};
+	}
+
+	getPoint()
+	// {x:1, y:10}
+	```
+
+	如果某个方法的值是一个Generator函数，前面需要加上星号。
+
+	```
+	var obj = {
+	  * m(){
+	    yield 'hello world';
+	  }
+	};
+	```
+
+	2. 属性名表达式
+
+	用表达式作为属性名，这时要将表达式放在方括号之内。
+
+	obj['a' + 'bc'] = 123;
+
+	3. Object.is()
+
+	ES6提出“Same-value equality”（同值相等）算法，用来解决这个问题。Object.is就是部署这个算法的新方法。它用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致。不同之处只有两个：一是+0不等于-0，二是NaN等于自身。
+
+	```
+	+0 === -0 //true
+	NaN === NaN // false
+
+	Object.is(+0, -0) // false
+	Object.is(NaN, NaN) // true
+	```
+
+	4. Object.assign()
+
+	用于对象的合并，将源对象的所有可枚举属性，复制到目标对象
+	Object.assign方法的第一个参数是目标对象，后面的参数都是源对象。
+	Object.assign(target, source1, source2);
+
+	Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+
+	Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。
+
+	# 常见用途
+
+	a. 为对象添加属性
+
+	b. 为对象添加方法
+
+	c. 克隆对象
+
+	d. 合并多个对象
+
+	e. 为属性制定默认值
+
+	Object.assign方法将DEFAULTS和options合并成一个新对象，如果两者有同名属性，则option的属性值会覆盖DEFAULTS的属性值。
+
+	```
+	const DEFAULTS = {
+	  logLevel: 0,
+	  outputFormat: 'html'
+	};
+
+	function processContent(options) {
+	  options = Object.assign({}, DEFAULTS, options);
+	  console.log(options);
+	  // ...
+	}
+	```
+
+	6. 属性的遍历
+
+	a. for...in
+
+	for...in循环遍历对象自身的和继承的可枚举属性（不含 Symbol 属性）。
+
+	b. Object.keys(obj)
+
+	Object.keys返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含 Symbol 属性）。
+
+	c. Object.getOwnPropertyNames(obj)
+
+	Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含 Symbol 属性，但是包括不可枚举属性）。
+
+	d. Object.getOwnPropertySymbols(obj)
+
+	Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有 Symbol 属性。
+
+	e. Reflect.ownKeys(obj)
+
+	Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管属性名是 Symbol 或字符串，也不管是否可枚举。
+
+	以上的5种方法遍历对象的属性，都遵守同样的属性遍历的次序规则。
+
+	- 首先遍历所有属性名为数值的属性，按照数字排序。
+	- 其次遍历所有属性名为字符串的属性，按照生成时间排序。
+	- 最后遍历所有属性名为 Symbol 值的属性，按照生成时间排序。
 
 
 
