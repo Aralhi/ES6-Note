@@ -405,11 +405,77 @@ Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管�
 - 其次遍历所有属性名为字符串的属性，按照生成时间排序。
 - 最后遍历所有属性名为 Symbol 值的属性，按照生成时间排序。
 
+## Symbol
 
+1. 概述
+	ES5的对象属性名都是字符串，存在冲突的可能性。如果有一种机制能保证每个属性的名字都是第一无二的就好了，这就是ES6引入Symbol的原因
+	ES6引入了一种新的原始数据类型Symbol，表示第一无二的至，它就是JavaScript语言的第七种数据类型。前六种是undefined、null、Boolean、String、Number、Object。
 
+	```
+	let s = Symbol();
 
+	typeof s
+	// "symbol"
+	```
 
+## Set和Map数据结构
 
+1. Set
+
+	通过add方法向 Set 结构加入成员，不会存在相同的值
+	Set 函数可以接受一个数组（或者具有 iterable 接口的其他数据结构）作为参数，用来初始化。
+	```
+	const set = new Set([1, 2, 3, 4, 4]);
+	[...set]
+	// [1, 2, 3, 4]
+	```
+
+	向Set加入值的时候，不会发生类型转换，所以5和"5"是两个不同的值。
+	另外，两个对象总是不相等的。
+
+2. Set实例的属性和方法
+
+	- add(value)：添加某个值，返回Set结构本身。
+	- delete(value)：删除某个值，返回一个布尔值，表示删除是否成功。
+	- has(value)：返回一个布尔值，表示该值是否为Set的成员。
+	- clear()：清除所有成员，没有返回值。
+
+	Array.from方法可以将 Set 结构转为数组。
+
+	**遍历操作**
+
+	- keys()：返回键名的遍历器
+	- values()：返回键值的遍历器
+	- entries()：返回键值对的遍历器
+	- forEach()：使用回调函数遍历每个成员
+
+3. WeakSet
+	
+	首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
+
+	其次，WeakSet 中的对象都是**弱引用**，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于 WeakSet 之中。
+
+	WeakSet没有size属性，没有办法遍历它的成员。
+
+	WeakSet 不能遍历，是因为成员都是弱引用，随时可能消失，遍历机制无法保证成员的存在，很可能刚刚遍历结束，成员就取不到了。WeakSet 的一个用处，是储存 DOM 节点，而不用担心这些节点从文档移除时，会引发内存泄漏。
+
+## Map
+
+	JavaScript对象，传统上只能用字符串当作键，这给它的使用带来了很大的限制，为了解决这个问题，ES提供了Map数据结构。**键的范围不限于字符串**
+
+	```
+	const m = new Map();
+	const o = {p: 'Hello World'};
+
+	m.set(o, 'content')
+	m.get(o) // "content"
+
+	m.has(o) // true
+	m.delete(o) // true
+	m.has(o) // false
+	```
+
+	
 
 
 
