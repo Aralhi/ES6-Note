@@ -1,0 +1,74 @@
+React笔记
+
+React独有的JSX语法，跟JS不兼容，凡是使用JSX的地方都要加上type="text/label"
+
+一般使用三个库：react.js(核心库) react-dom.js(提供与DOM相关的功能) Browser.js(讲JSX语法转换成JS语法，这一步很耗时间，实际上线的时候，应该将它放到服务器完成)。
+
+ReactDOM.render()
+	render是React最基本方法，用于将模板转换成HTML语言，并插入制定DOM节点。
+
+JSX语法
+	HTML与js混写
+	遇到<开头就用HTML规则解析，以{开头就用js规则解析。
+
+	JSX允许在模板插入js变量，如果变量是一个数组就展开数组的所有成员
+
+组件
+	所有的组件必须有自己的render方法，用于输出组件。组件的第一个字母必须大写，否则报错。组件只能包含一个顶层标签，否则也会报错。
+
+	组件的用法与原生的html标签完全一致，可以任意加入属性，
+	比如 <HelloMessage name="John"> ，就是 HelloMessage 组件加入一个 name 属性，值为 John。组件的属性可以在组件类的 this.props 对象上获取，比如 name 属性就可以通过 this.props.name 读取
+
+this.props.children
+	this.props对象的属性与组件的属性一一对应，但是有一个例外，就是this.props。children属性，它标书组件的所有子节点。
+
+	React 提供一个工具方法 React.Children 来处理 this.props.children 。我们可以用 React.Children.map 来遍历子节点，而不用担心 this.props.children 的数据类型是 undefined 还是 object
+
+PropTypes
+	组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求
+	var MyTitle = React.createClass({
+	  propTypes: {
+	    title: React.PropTypes.string.isRequired,
+	  },
+
+	  render: function() {
+	     return <h1> {this.props.title} </h1>;
+	   }
+	});
+	getDefaultProps 方法可以用来设置组件属性的默认值
+	var MyTitle = React.createClass({
+	  getDefaultProps : function () {
+	    return {
+	      title : 'Hello World'
+	    };
+	  },
+
+	  render: function() {
+	     return <h1> {this.props.title} </h1>;
+	   }
+	});
+
+	ReactDOM.render(
+	  <MyTitle />,
+	  document.body
+	);
+
+获取真实的DOM节点
+	组件并不是真实的DOM，而是存在于内存治中的一种数据结构，叫做virtual DOM。只有插入文档之后才变成真正的DOM。根据React设计，所有的DOM变动都现在virtual DOM上变动，然后再讲实际发生变动的部分反映到真实的DOM上，这种算法叫做DOM diff，它可以极大的提高网页的性能。
+	但是有时候需要获取真的DOM节点，这时就要用到ref属性。
+	handleClick: function() {
+	    this.refs.myTextInput.focus();
+	  }
+
+this.state
+	React一大创新就是将组建看成一个状态机，一开始有一个厨师状态，然后用户互动，导致状态变化，从而出发重新渲染。
+	getInitialState 方法用于定义初始状态，也就是一个对象，这个对象可以通过 this.state 属性读取。当用户点击组件，导致状态变化，this.setState 方法就修改状态值，每次修改以后，自动调用 this.render 方法，再次渲染组件
+
+表单
+	用户在表单填入的内容，属于用户跟组件的互动，所以不能用 this.props 读取
+	textarea 元素、select元素、radio元素都属于这种情况
+
+
+
+
+
