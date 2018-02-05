@@ -58,7 +58,27 @@ DOM更新原理
 	VDOM是有VNode组成的，Vue的diff算法是只在同级VNode间做diff，递归的进行同级VNode的diff
 Vue异步更新DOM	https://www.cnblogs.com/answershuto/p/7588872.html
 	只要观察到数据变化，Vue将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。如果同一个watcher被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和DOM操作上非常重要。然后在下一个时间循环中，Vue刷新队列并执行DOM更新。
-
-
-
-
+ETag http://blog.csdn.net/kikikind/article/details/6266101
+js属性和方法	https://www.cnblogs.com/lgmcolin/archive/2013/02/04/2891575.html
+	【私有变量】 在对象内部使用'var'关键字来声明，而且它只能被私有函数和特权方法访问。 
+	【私有方法】 在对象的构造函数里声明（或者是通过varfunctionName=function(){...}来定义），
+		它能被特权方法调用（包括对象的构造方法）和私有方法调用,私有函数只能访问私有的方法和属性。 
+	【特权方法】通过this.methodName=function(){...}来声明而且可能被对象外部的代码调用。
+		它可以使用：this.特权函数() 方式来调用特权函数，使用 ：私有函数()方式来调用私有函数。
+	【公共属性】 通过this.variableName来定义而且在对象外部是可以读写的。不能被私有函数所调用。 
+	【公共方法】 通过ClassName.prototype.methodName=function(){...}来定义可以从对象外部来调用。 
+	【原型属性】 通过ClassName.prototype.propertyName=someValue 来定义。 
+	【静态属性】 通过ClassName.propertyName=someValue 来定义。
+	【静态方法】 通过ClassName.funName=function(){...} 来定义。
+http常见的头字段
+	请求头：Cache-Contorl、cookie、Host、Referer、Accept、Accept-encoding、Accept-Language、User-Agent
+	相应头：Content-Length、Content-Type、Date、ETag、Keep-Alive
+在body头部插入元素
+	var first=document.body.firstChild; //得到第一个元素
+	document.body.insertBefore(divObj,first); //在第原来的第一个元素之前插入
+SQL注入
+	不直接拼接SQL，把用户的输入作为参数。这样用户的输入无法传到数据库的SQL解释器被编译执行，也不会越权变成代码。
+Https http://blog.csdn.net/zgwangbo/article/details/50889623
+http2.0
+	https://www.zhihu.com/question/34074946
+	http://io.upyun.com/2015/05/13/http2/
