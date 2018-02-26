@@ -159,5 +159,20 @@ BFC
 	float的值不为none
 	position的值不为static或者relative
 	display的值为 table-cell, table-caption, inline-block, flex, 或者 inline-flex中的其中一个
-
-
+设置元素不可见
+	1. display:none
+	2. visibility:hidden
+	3. position使元素飘出屏幕
+	4. opacity:0，不透明度设成0
+	5. height:0，overflow:hidden
+继承
+	1. 原型链继承
+		SubType.prototype = new SuperType();
+		缺点：使用引用类型的原型属性时，会被所有实例共享。即instance1修改了属性，instance2也会变
+	2. 构造函数继承
+		function SubType() {
+			SuperType.call(this);
+		}
+		缺点：超类中定义的方法对子类是不可见的
+	3. 组合继承
+		使用原型链实现对原型属性和方法的继承，使用构造函数实现对实例属性的继承。
